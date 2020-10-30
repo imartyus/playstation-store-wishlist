@@ -1,0 +1,36 @@
+<html>
+
+<head>
+	<title>PlayStation Store Wishlist</title>
+	<link rel="stylesheet" href="styles.css">
+	<meta charset="UTF-8">
+</head>
+
+<body x-data="initState()" x-init="readStorage()">
+	<section>
+		<input type="text" x-model="inputVal" placeholder="Paste PSN Store URL here and click Add to Wishlist">
+		<button class="btn" x-bind:disabled="loading" x-text="loading ? 'Fetching data!' : 'Add to Wishlist'" @click="addGame"></button>
+		<span class="error-msg" x-show.transition="inputError">Invalid URL! Paste it directly from the PSN Store.</span>
+	</section>
+	<section class="wl" x-show.transition="gameList.length">
+		<div class="wl-head">My Wishlist:</div>
+		<template x-for="item in gameList" :key="item">
+			<div>
+				<div class="wl-item">
+					<a x-bind:href="item.url" target="_blank" x-text="item.title"></a>
+					&nbsp;&nbsp;<span x-text="item.price"></span>
+					&nbsp;<span class="og-price" x-text="item.ogPrice"></span>
+				</div>
+				<button class="btn" @click="removeGame(item.url)">Remove</button>
+			</div>
+	</template>
+	</section>
+	<div class="last-updated" x-show.transition="lastUpdated">
+		Last updated: <span x-text='lastUpdated'></span>
+	</div>
+
+	<script src="alpine.js"></script>
+	<script src="popup.js"></script>
+</body>
+
+</html>
