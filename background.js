@@ -1,5 +1,5 @@
 chrome.runtime.onInstalled.addListener(function() {
-	chrome.alarms.create('wishlistPoll', { periodInMinutes: 5 })
+	chrome.alarms.create('wishlistPoll', { periodInMinutes: 2 })
 });
 
 
@@ -14,16 +14,28 @@ chrome.alarms.onAlarm.addListener(function() {
 			})
 			Promise.all(requests)
 			.then(updatedWishlist => {
+				updatedWishlist = updatedWishlist.filter(item => !!item) // clear nulls
 				const wishlist = {
 					items: updatedWishlist,
 					lastUpdated: Date.now()
 				}
+				updateBadge(updatedWishlist)
 				chrome.storage.sync.set({ wishlist })
 			})
 			.catch(err => console.log('On Alarm error: ', err))
 		}
 	})
 })
+
+function updateBadge(items) {
+	const numOnSale = items.reduce((num, item) => {
+		if (item.ogPrice) {
+			return num + 1
+		}
+		return num
+	}, 0)
+	chrome.browserAction.setBadgeText({ text: numOnSale ? numOnSale.toString() : '' })
+}
 
 function fetchAndScrapeUrl(url) {
   return fetch(url)
@@ -33,11 +45,15 @@ function fetchAndScrapeUrl(url) {
     const price = doc.querySelector("span[data-qa='mfeCtaMain#offer0#finalPrice']")
     const ogPrice = doc.querySelector("span[data-qa='mfeCtaMain#offer0#originalPrice']")
     const title = doc.querySelector('title')
-    return {
-      title: title.innerHTML,
-      price: price.innerHTML,
-			ogPrice: ogPrice ? ogPrice.innerHTML : null,
-			url
+    try {
+      return {
+        title: title.innerHTML,
+        price: price.innerHTML,
+        ogPrice: ogPrice ? ogPrice.innerHTML : null,
+        url
+      }
+    } catch {
+      return null
     }
   })
 }

@@ -1,6 +1,7 @@
 :root {
   --color-blue: #00439c;
   --color-error: orangered;
+  --color-warn: orange;
   --color-grey: grey;
   --text-color: white;
 }
@@ -37,6 +38,12 @@ input {
 
 .error-msg {
   color: var(--color-error);
+  font-size: 13px;
+  margin-left: 8px;
+}
+
+.warn-msg {
+  color: var(--color-warn);
   font-size: 13px;
   margin-left: 8px;
 }

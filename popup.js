@@ -1,5 +1,4 @@
 const url1 = 'https://store.playstation.com/en-ca/product/UP4497-CUSA13472_00-0000000000000002'
-const url2 = 'https://store.playstation.com/en-ca/product/UP5927-CUSA20145_00-STAR990000300002'
 
 // const mockItems = [
 //   {
@@ -20,24 +19,35 @@ const psnProductUrlTester = /https:\/\/store\.playstation\.com\/\D{5}\/product\/
 function initState() {
   return {
     inputError: false,
+    inputWarn: false,
     loading: false,
     inputVal: '',
     gameList: [],
     lastUpdated: '',
     addGame() {
+      this.inputWarn = false
       const validUrl = psnProductUrlTester.test(this.inputVal)
       if (validUrl) {
-        this.loading = true
         this.inputError = false
-        fetchAndScrapeUrl(this.inputVal)
-        .then(gameData => {
-          getWishlist(wishlist => {
-            wishlist.items.push(gameData)
-            chrome.storage.sync.set({ wishlist })
-            this.gameList = wishlist.items
+        getWishlist(wishlist => {
+          const existingGame = wishlist.items.find(item => item.url === this.inputVal)
+          if (existingGame) {
+            // show warning
+            this.inputWarn = true
             this.inputVal = ''
-            this.loading = false
-          })
+          } else {
+            this.loading = true
+            fetchAndScrapeUrl(this.inputVal)
+            .then(gameData => {
+              if (gameData) {
+                wishlist.items.push(gameData)
+                chrome.storage.sync.set({ wishlist })
+                this.gameList = wishlist.items
+              }
+              this.inputVal = ''
+              this.loading = false  
+            })
+          }
         })
       } else {
         this.inputError = true
@@ -80,11 +90,15 @@ function fetchAndScrapeUrl(url) {
     const price = doc.querySelector("span[data-qa='mfeCtaMain#offer0#finalPrice']")
     const ogPrice = doc.querySelector("span[data-qa='mfeCtaMain#offer0#originalPrice']")
     const title = doc.querySelector('title')
-    return {
-      title: title.innerHTML,
-      price: price.innerHTML,
-      ogPrice: ogPrice ? ogPrice.innerHTML : null,
-      url
+    try {
+      return {
+        title: title.innerHTML,
+        price: price.innerHTML,
+        ogPrice: ogPrice ? ogPrice.innerHTML : null,
+        url
+      }
+    } catch {
+      return null
     }
   })
 }

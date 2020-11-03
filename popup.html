@@ -11,6 +11,7 @@
 		<input type="text" x-model="inputVal" placeholder="Paste PSN Store URL here and click Add to Wishlist">
 		<button class="btn" x-bind:disabled="loading" x-text="loading ? 'Fetching data!' : 'Add to Wishlist'" @click="addGame"></button>
 		<span class="error-msg" x-show.transition="inputError">Invalid URL! Paste it directly from the PSN Store.</span>
+		<span class="warn-msg" x-show.transition="inputWarn">This game is already on your Wishlist</span>
 	</section>
 	<section class="wl" x-show.transition="gameList.length">
 		<div class="wl-head">My Wishlist:</div>

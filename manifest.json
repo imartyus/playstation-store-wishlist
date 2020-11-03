@@ -1,18 +1,17 @@
 {
-  "name": "PlayStation Store Plus",
-  "description": "Better download list.",
+  "name": "PlayStation Store Wishlist",
+  "description": "Replacement for the deprecated Wishlist on PSN Store",
   "version": "1.0.0",
-  "author": "Gordian Zhang",
+  "author": "Ivan M",
   "permissions": [
     "tabs",
     "alarms",
     "storage",
-    "webNavigation",
     "https://store.playstation.com/*"
   ],
   "browser_action": {
     "default_popup": "popup.html",
-    "default_title": "PlayStation Store Favourites",
+    "default_title": "PlayStation Store Wishlist",
     "default_icon": {
       "48": "icon-48.png",
       "128": "icon-128.png"
