@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Ivan M",
   "permissions": [
-    "tabs",
+    "activeTab",
     "alarms",
     "storage",
     "https://store.playstation.com/*"

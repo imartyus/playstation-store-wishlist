@@ -1,5 +1,5 @@
 chrome.runtime.onInstalled.addListener(function() {
-	chrome.alarms.create('wishlistPoll', { periodInMinutes: 2 })
+	chrome.alarms.create('wishlistPoll', { periodInMinutes: 60 })
 });
 
 
@@ -7,7 +7,6 @@ chrome.runtime.onInstalled.addListener(function() {
 chrome.alarms.onAlarm.addListener(function() {
 	chrome.storage.sync.get(['wishlist'], ({ wishlist }) => {
 		if (wishlist && wishlist.items && wishlist.items.length) {
-			console.log('Updating!');
 			const requests = []
 			wishlist.items.forEach(item => {
 				requests.push(fetchAndScrapeUrl(item.url))
