@@ -2,6 +2,7 @@
   --color-blue: #00439c;
   --color-green: green;
   --color-lightgreen: darkseagreen;
+  --color-gray: darkgray;
   --color-error: orangered;
   --color-warn: orange;
   --color-grey: grey;
@@ -17,11 +18,12 @@ body {
   color: var(--text-color);
 }
 
-input {
-  width: 500px;
-  padding: 5px;
-  border-radius: 5px;
-  margin-bottom: 8px;
+.info-block {
+  font-size: 16px;
+  border: 1px solid;
+  width: 306px;
+  padding: 10px;
+  color: var(--color-gray);
 }
 
 .btn {
@@ -39,7 +41,6 @@ input {
 }
 
 .btn-add {
-  /* background-color: var(--color-green); */
   padding: 12px;
 }
 

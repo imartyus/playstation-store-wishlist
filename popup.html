@@ -7,14 +7,15 @@
 </head>
 
 <body x-data="getState()" x-init="init()">
-	<section x-show.transition="!onStoreUrl">
-		<input type="text" x-model="inputVal" placeholder="Paste PSN Store URL here and click Add to Wishlist">
-		<button class="btn" x-bind:disabled="loading" x-text="loading ? 'Fetching data!' : 'Add to Wishlist'" @click="addGame"></button>
-		<span class="error-msg" x-show.transition="inputError">Invalid URL! Paste it directly from the PSN Store.</span>
-		<span class="warn-msg" x-show.transition="inputWarn">This game is already on your Wishlist</span>
+	<section x-show="!onStoreUrl" class="info-block">
+		Open this extension on a PlayStation Store product page to add it to the Wishlist
 	</section>
-	<section x-show.transition="onStoreUrl">
-		<button class="btn btn-add" x-bind:disabled="loading || onStoreAlreadyAdded" x-text="loading ? 'Adding!' : onStoreAlreadyAdded ? 'Already in Wishlist' : 'Add this game to Wishlist'" @click="addGameFromTab"></button>
+	<section x-show="onStoreUrl">
+		<button class="btn btn-add" 
+			x-bind:disabled="loading || onStoreAlreadyAdded" 
+			x-text="loading ? 'Adding!' : onStoreAlreadyAdded ? 'Already in Wishlist' : 'Add this game to Wishlist'" 
+			@click="addGameFromTab">
+		</button>
 	</section>
 	<section class="wl" x-show.transition="gameList.length">
 		<div class="wl-head">My Wishlist:</div>

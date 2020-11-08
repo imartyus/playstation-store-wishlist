@@ -5,43 +5,11 @@ const psnProductUrlTester = /https:\/\/store\.playstation\.com\/\D{5}\/product\/
 // Init component state
 function getState() {
   return {
-    inputError: false,
-    inputWarn: false,
     loading: false,
     onStoreUrl: '',
     onStoreAlreadyAdded: false,
-    inputVal: '',
     gameList: [],
     lastUpdated: '',
-    addGame() {
-      this.inputWarn = false
-      this.inputError = false
-      const validUrl = psnProductUrlTester.test(this.inputVal)
-      if (validUrl) {
-        getWishlist(wishlist => {
-          const existingGame = wishlist.items.find(item => item.url === this.inputVal)
-          if (existingGame) {
-            // show warning
-            this.inputWarn = true
-            this.inputVal = ''
-          } else {
-            this.loading = true
-            fetchAndScrapeUrl(this.inputVal)
-            .then(gameData => {
-              if (gameData) {
-                wishlist.items.push(gameData)
-                chrome.storage.sync.set({ wishlist })
-                this.gameList = wishlist.items
-              }
-              this.inputVal = ''
-              this.loading = false  
-            })
-          }
-        })
-      } else {
-        this.inputError = true
-      }
-    },
     addGameFromTab() {
       getWishlist(wishlist => {
         this.loading = true
