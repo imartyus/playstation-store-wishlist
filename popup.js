@@ -1,4 +1,4 @@
-const url1 = 'https://store.playstation.com/en-ca/product/UP4497-CUSA13472_00-0000000000000002'
+// const url1 = 'https://store.playstation.com/en-ca/product/UP4497-CUSA13472_00-0000000000000002'
 
 const psnProductUrlTester = /https:\/\/store\.playstation\.com\/\D{5}\/product\/\S+/g
 
@@ -41,6 +41,7 @@ function getState () {
           const currentUrl = tabs[0].url
           const isStoreUrl = psnProductUrlTester.test(currentUrl)
           if (isStoreUrl) {
+            // TODO clean up url before comparing
             const existingGame = wishlist.items.find(item => item.url === currentUrl)
             this.onStoreUrl = currentUrl
             this.onStoreAlreadyAdded = !!existingGame

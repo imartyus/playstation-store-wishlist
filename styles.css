@@ -7,10 +7,11 @@
   --color-warn: orange;
   --color-grey: grey;
   --text-color: white;
+  --bg-color: #1f1f1f;
 }
 
 body {
-  background-color: #1f1f1f;
+  background-color: var(--bg-color);
   font-family: "SST",helvetica,arial,sans-serif;
   width: 500px;
   padding: 15px 20px 40px;

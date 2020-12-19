@@ -26,12 +26,9 @@ chrome.alarms.onAlarm.addListener(function () {
 })
 
 function updateBadge (items) {
-  const numOnSale = items.reduce((num, item) => {
-    if (item.ogPrice) {
-      return num + 1
-    }
-    return num
-  }, 0)
+  
+  const numOnSale = items.reduce((num, item) => item.ogPrice ? num + 1 : num, 0)
+
   chrome.browserAction.setBadgeText({ text: numOnSale ? numOnSale.toString() : '' })
 }
 
