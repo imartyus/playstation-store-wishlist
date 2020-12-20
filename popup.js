@@ -1,6 +1,6 @@
-// const url1 = 'https://store.playstation.com/en-ca/product/UP4497-CUSA13472_00-0000000000000002'
-
-const psnProductUrlTester = /https:\/\/store\.playstation\.com\/\D{5}\/product\/\S+/g
+import 'alpinejs'
+import { fetchAndScrapeUrl } from './helpers/pageScraping'
+import { getWishlist, updateWishlist, isOnStoreUrl } from './helpers/browserApi'
 
 // Init component state
 function getState () {
@@ -10,6 +10,7 @@ function getState () {
     onStoreAlreadyAdded: false,
     gameList: [],
     lastUpdated: '',
+
     addGameFromTab () {
       getWishlist(wishlist => {
         this.loading = true
@@ -17,7 +18,7 @@ function getState () {
           .then(gameData => {
             if (gameData) {
               wishlist.items.push(gameData)
-              chrome.storage.sync.set({ wishlist })
+              updateWishlist(wishlist)
               this.gameList = wishlist.items
               this.onStoreAlreadyAdded = true
             }
@@ -25,21 +26,20 @@ function getState () {
           })
       })
     },
+
     removeGame (url) {
       getWishlist(wishlist => {
         wishlist.items = wishlist.items.filter(item => item.url !== url)
-        chrome.storage.sync.set({ wishlist })
+        updateWishlist(wishlist)
         this.gameList = wishlist.items
       })
     },
+
     init () {
       getWishlist(wishlist => {
         this.gameList = wishlist.items
         this.lastUpdated = wishlist.lastUpdated ? (new Date(wishlist.lastUpdated)).toLocaleString() : null
-
-        chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-          const currentUrl = tabs[0].url
-          const isStoreUrl = psnProductUrlTester.test(currentUrl)
+        isOnStoreUrl((currentUrl, isStoreUrl) => {
           if (isStoreUrl) {
             // TODO clean up url before comparing
             const existingGame = wishlist.items.find(item => item.url === currentUrl)
@@ -52,45 +52,4 @@ function getState () {
   }
 }
 
-/// //////////////////////////////////////////////////////////////////
-
-function getWishlist (cb) {
-  chrome.storage.sync.get(['wishlist'], ({ wishlist }) => {
-    if (wishlist && wishlist.items) {
-      cb(wishlist)
-    } else {
-      cb({
-        items: [],
-        lastUpdated: null
-      })
-    }
-  })
-}
-
-function fetchAndScrapeUrl (url) {
-  return fetch(url)
-    .then(res => res.text())
-    .then(html => {
-      const doc = htmlToElement(html)
-      const price = doc.querySelector("span[data-qa='mfeCtaMain#offer0#finalPrice']")
-      const ogPrice = doc.querySelector("span[data-qa='mfeCtaMain#offer0#originalPrice']")
-      const title = doc.querySelector('title')
-      try {
-        return {
-          title: title.innerHTML,
-          price: price.innerHTML,
-          ogPrice: ogPrice ? ogPrice.innerHTML : null,
-          url
-        }
-      } catch {
-        return null
-      }
-    })
-}
-
-function htmlToElement (html) {
-  const template = document.createElement('template')
-  html = html.trim() // Never return a text node of whitespace as the result
-  template.innerHTML = html
-  return template.content.cloneNode(true)
-}
+window.getState = getState

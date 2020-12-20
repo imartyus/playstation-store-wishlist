@@ -1,0 +1,29 @@
+{
+  "name": "playstation-store-wishlist",
+  "version": "1.0.0",
+  "description": "Since Wishlist was deprecated in the recent PSN Store website update, this extension provides an alternative solution to keep track of the games you want to buy as well as their current prices.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "parcel": "parcel popup.html background.js",
+    "build": "rm -R dist; parcel build popup.html background.js; cp manifest.json dist; cp *.png dist",
+    "format": "standard --global chrome --global fetch --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imartyus/playstation-store-wishlist.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imartyus/playstation-store-wishlist/issues"
+  },
+  "homepage": "https://github.com/imartyus/playstation-store-wishlist#readme",
+  "dependencies": {
+    "alpinejs": "^2.8.0",
+    "parcel-bundler": "^1.12.4"
+  },
+  "devDependencies": {
+    "standard": "^16.0.3"
+  }
+}
