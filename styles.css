@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url(./fonts/Roboto-Regular.ttf) format('truetype');
+}
+
 :root {
   --color-blue: #00439c;
   --color-green: green;
@@ -12,11 +19,15 @@
 
 body {
   background-color: var(--bg-color);
-  font-family: "SST",helvetica,arial,sans-serif;
+  font-family: "Roboto", arial, sans-serif;
   width: 500px;
   padding: 15px 20px 40px;
   min-height: 100px;
   color: var(--text-color);
+}
+
+button {
+  font-family: "Roboto", arial, sans-serif;
 }
 
 .info-block {
