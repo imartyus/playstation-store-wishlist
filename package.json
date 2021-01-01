@@ -21,9 +21,10 @@
   "homepage": "https://github.com/imartyus/playstation-store-wishlist#readme",
   "dependencies": {
     "alpinejs": "^2.8.0",
-    "parcel-bundler": "^1.12.4"
+    "lodash.orderby": "^4.6.0"
   },
   "devDependencies": {
+    "parcel-bundler": "^1.12.4",
     "standard": "^16.0.3"
   }
 }

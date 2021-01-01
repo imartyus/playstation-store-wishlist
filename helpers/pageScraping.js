@@ -12,14 +12,17 @@ export function fetchAndScrapeUrl (url) {
       const title = doc.querySelector(nameQuery)
       try {
         return {
-          title: title.innerHTML,
+          title: title.innerHTML.trim(),
           price: price.innerHTML,
           ogPrice: ogPrice ? ogPrice.innerHTML : null,
           url
         }
       } catch {
-        return null
+        throw new Error(`Could not parse response from ${url}`)
       }
+    })
+    .catch(err => {
+      throw err
     })
 }
 

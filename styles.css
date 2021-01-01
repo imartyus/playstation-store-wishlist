@@ -30,7 +30,7 @@ body {
 .btn {
   padding: 8px 10px;
   background-color: var(--color-blue);
-  color: white;
+  color: var(--text-color);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -43,6 +43,19 @@ body {
 
 .btn-add {
   padding: 12px;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  padding: 1px 0px;
+  margin: 0 4px;
+  cursor: pointer;
+}
+
+.btn-link.active, .btn-link:hover {
+  border-bottom: 1px solid;
 }
 
 .error-msg {
@@ -59,6 +72,20 @@ body {
 
 .wl {
   margin-top: 20px;
+}
+
+.wl-sort {
+  float: right;
+  font-size: 14px;
+}
+
+.wl-sort-arrow {
+  display: inline-block;
+  transition: all 500ms;
+}
+
+.rotated {
+  transform: rotate(180deg);
 }
 
 .wl-head {

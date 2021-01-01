@@ -18,7 +18,15 @@
 		</button>
 	</section>
 	<section class="wl" x-show.transition="gameList.length">
-		<div class="wl-head">My Wishlist:</div>
+		<div class="wl-head">
+			<span>My Wishlist:</span>
+			<div class="wl-sort">
+				Sort By: 
+				<button @click="updateSort('title')" class="btn-link" x-bind:class="{ 'active': sortBy === 'title' }">Title</button>
+				<span class="wl-sort-arrow" x-bind:class="{ 'rotated': sortOrder === 'asc' }">&uarr;</span>
+				<button @click="updateSort('price')" class="btn-link" x-bind:class="{ 'active': sortBy === 'price' }">Price</button>
+			</div>
+		</div>
 		<template x-for="item in gameList" :key="item">
 			<div>
 				<div class="wl-item" x-bind:class="{ 'sale': item.ogPrice }">
