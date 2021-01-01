@@ -6,3 +6,4 @@ Since Wishlist was deprecated in the recent PSN Store website update, this exten
 - The extension will keep track of your selections and periodically update the prices in the background
 - Once one of the added games goes on sale, you will be notified through the extension's badge
 - Clicking a game's title will take you directly to its PSN Store page 
+- Sort your Wishlist by title or current price
