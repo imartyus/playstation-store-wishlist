@@ -119,6 +119,11 @@ button {
 .wl-item a {
   color: var(--text-color);
   text-decoration: none;
+  width: 273px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
 }
 
 .wl-item.sale a {
@@ -132,6 +137,10 @@ button {
 .og-price {
   text-decoration: line-through;
   opacity: 0.5;
+}
+
+.text-small {
+  font-size: 12px;
 }
 
 .last-updated {

@@ -33,6 +33,7 @@
 					<a x-bind:href="item.url" target="_blank" x-text="item.title"></a>
 					&nbsp;&nbsp;<span x-text="item.price"></span>
 					&nbsp;<span class="og-price" x-text="item.ogPrice"></span>
+					<div class="text-small" x-text="item.saleEnds"></div>
 				</div>
 				<button class="btn" @click="removeGame(item.url)">Remove</button>
 			</div>

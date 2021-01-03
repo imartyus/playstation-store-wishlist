@@ -1,5 +1,6 @@
 const priceQuery = "span[data-qa='mfeCtaMain#offer0#finalPrice']"
 const ogPriceQuery = "span[data-qa='mfeCtaMain#offer0#originalPrice']"
+const saleEndsQuery = "span[data-qa='mfeCtaMain#offer0#discountDescriptor']"
 const nameQuery = 'title'
 
 export function fetchAndScrapeUrl (url) {
@@ -9,12 +10,14 @@ export function fetchAndScrapeUrl (url) {
       const doc = htmlToElement(html)
       const price = doc.querySelector(priceQuery)
       const ogPrice = doc.querySelector(ogPriceQuery)
+      const saleEnds = doc.querySelector(saleEndsQuery)
       const title = doc.querySelector(nameQuery)
       try {
         return {
           title: title.innerHTML.trim(),
           price: price.innerHTML,
           ogPrice: ogPrice ? ogPrice.innerHTML : null,
+          saleEnds: saleEnds ? saleEnds.innerHTML : null,
           url
         }
       } catch {
