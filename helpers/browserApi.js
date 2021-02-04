@@ -1,4 +1,4 @@
-const psnProductUrlTester = /https:\/\/store\.playstation\.com\/\D{5}\/product\/\S+/g
+const psnProductUrlTester = /https:\/\/store\.playstation\.com\/[a-zA-Z-]+\/product\/\S+/g
 
 export function getWishlist (cb) {
   chrome.storage.sync.get(['wishlist'], ({ wishlist }) => {
