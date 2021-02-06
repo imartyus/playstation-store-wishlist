@@ -11,7 +11,7 @@ function getState () {
     onStoreAlreadyAdded: false,
     gameList: [],
     lastUpdated: '',
-    sortBy: 'title',
+    sortBy: 'title', // | 'price'
     sortOrder: 'asc',
 
     addGameFromTab () {
@@ -47,7 +47,16 @@ function getState () {
     },
 
     getSortedList (list) {
-      return orderBy(list, this.sortBy, this.sortOrder)
+      const NUMERIC_REGEXP = /[-]{0,1}[\d]*[.]{0,1}[\d]+/g; // extract price number
+      
+      const sort = (item) => {
+        if (this.sortBy === 'price') {
+          return parseInt(item.price.match(NUMERIC_REGEXP)[0])
+        }
+        return item[this.sortBy]
+      }
+
+      return orderBy(list, sort, this.sortOrder)
     },
 
     init () {
