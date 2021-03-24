@@ -1,8 +1,22 @@
-const psnProductUrlTester = /https:\/\/store\.playstation\.com\/[a-zA-Z-]+\/product\/\S+/g
+const psnProductUrlTester = /https:\/\/(store|www)\.playstation\.com\/[a-zA-Z-]+\/(product|games)\/\S+/g
+
+// const testItem = {
+//   title: 'TEST',
+//   price: 'RUB 3300.20',
+//   // ogPrice: ogPrice ? ogPrice.innerHTML : null,
+//   // saleEnds: saleEnds ? saleEnds.innerHTML : null,
+//   url: 'www.google.ca'
+// }
+
+// const TEST = []
+// for (let i = 0; i<40; i++) {
+//   TEST.push(testItem)
+// }
 
 export function getWishlist (cb) {
   chrome.storage.sync.get(['wishlist'], ({ wishlist }) => {
     if (wishlist && wishlist.items) {
+      // wishlist.items = [...wishlist.items, ...TEST]
       cb(wishlist)
     } else {
       cb({

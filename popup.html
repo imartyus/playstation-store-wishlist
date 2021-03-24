@@ -28,15 +28,19 @@
 			</div>
 		</div>
 		<template x-for="item in gameList" :key="item">
-			<div>
+			<section class="wl-row">
 				<div class="wl-item" x-bind:class="{ 'sale': item.ogPrice }">
-					<a x-bind:href="item.url" target="_blank" x-text="item.title"></a>
-					&nbsp;&nbsp;<span x-text="item.price"></span>
-					&nbsp;<span class="og-price" x-text="item.ogPrice"></span>
-					<div class="text-small" x-text="item.saleEnds"></div>
+					<div class="wl-item-title">
+						<a x-bind:href="item.url" target="_blank" x-text="item.title"></a>
+						<div class="text-small" x-text="item.saleEnds"></div>
+					</div>
+					<div>
+						<span x-text="item.price"></span>
+						&nbsp;<span class="og-price" x-text="item.ogPrice"></span>
+					</div>
 				</div>
 				<button class="btn" @click="removeGame(item.url)">Remove</button>
-			</div>
+			</section>
 	</template>
 	</section>
 	<div class="last-updated" x-show.transition="lastUpdated">

@@ -1,7 +1,7 @@
 const priceQuery = "span[data-qa='mfeCtaMain#offer0#finalPrice']"
 const ogPriceQuery = "span[data-qa='mfeCtaMain#offer0#originalPrice']"
 const saleEndsQuery = "span[data-qa='mfeCtaMain#offer0#discountDescriptor']"
-const nameQuery = 'title'
+const nameQuery = 'h1'
 
 export function fetchAndScrapeUrl (url) {
   return fetch(url)
