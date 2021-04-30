@@ -28,13 +28,19 @@ export function getWishlist (cb) {
 }
 
 export function updateWishlist (updatedWishlist, partialUpdate = false) {
-  if (partialUpdate) {
-    getWishlist(wishlist => {
-      chrome.storage.sync.set({ wishlist: { ...wishlist, ...updatedWishlist } })
-    })
-  } else {
-    chrome.storage.sync.set({ wishlist: updatedWishlist })
-  }
+  return new Promise(resolve => {
+    if (partialUpdate) {
+      getWishlist(wishlist => {
+        chrome.storage.sync.set({ wishlist: { ...wishlist, ...updatedWishlist } }, () => {
+          resolve()
+        })
+      })
+    } else {
+      chrome.storage.sync.set({ wishlist: updatedWishlist }, () => {
+        resolve()
+      })
+    }
+  })
 }
 
 export function updateBadge (items) {

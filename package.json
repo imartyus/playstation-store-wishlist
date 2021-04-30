@@ -2,7 +2,15 @@
   "name": "playstation-store-wishlist",
   "version": "1.0.0",
   "description": "Since Wishlist was deprecated in the recent PSN Store website update, this extension provides an alternative solution to keep track of the games you want to buy as well as their current prices.",
+  "watch": {
+    "build": {
+      "patterns": ["helpers", "background.js", "popup", "styles"],
+      "extensions": "js,css,html",
+      "delay": 1500
+    }
+  },
   "scripts": {
+    "watch": "npm-watch build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "parcel": "parcel popup.html background.js",
     "build": "rm -R dist; parcel build popup.html background.js; cp manifest.json dist; cp *.png dist",
@@ -24,6 +32,7 @@
     "lodash.orderby": "^4.6.0"
   },
   "devDependencies": {
+    "npm-watch": "^0.9.0",
     "parcel-bundler": "^1.12.4",
     "standard": "^16.0.3"
   }

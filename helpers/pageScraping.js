@@ -1,3 +1,5 @@
+import { getWishlist, updateBadge, updateWishlist } from './browserApi'
+
 const priceQuery = "span[data-qa='mfeCtaMain#offer0#finalPrice']"
 const ogPriceQuery = "span[data-qa='mfeCtaMain#offer0#originalPrice']"
 const saleEndsQuery = "span[data-qa='mfeCtaMain#offer0#discountDescriptor']"
@@ -14,13 +16,14 @@ export function fetchAndScrapeUrl (url) {
       const title = doc.querySelector(nameQuery)
       try {
         return {
-          title: title.innerHTML.trim(),
-          price: price.innerHTML,
-          ogPrice: ogPrice ? ogPrice.innerHTML : null,
-          saleEnds: saleEnds ? saleEnds.innerHTML : null,
+          title: title.innerText.trim(),
+          price: price.innerText,
+          ogPrice: ogPrice ? ogPrice.innerText : null,
+          saleEnds: saleEnds ? saleEnds.innerText : null,
           url
         }
-      } catch {
+      } catch (e) {
+        // console.log(e);
         throw new Error(`Could not parse response from ${url}`)
       }
     })
@@ -34,4 +37,32 @@ function htmlToElement (html) {
   html = html.trim() // Never return a text node of whitespace as the result
   template.innerHTML = html
   return template.content.cloneNode(true)
+}
+
+export function refreshPriceData () {
+  return new Promise((resolve) => {
+    getWishlist(wishlist => {
+      if (!wishlist.items.length) {
+        return resolve()
+      }
+      const requests = []
+      wishlist.items.forEach(item => {
+        requests.push(fetchAndScrapeUrl(item.url))
+      })
+      Promise.all(requests)
+        .then(updatedWishlist => {
+          const updatedItems = updatedWishlist.filter(item => !!item) // clear nulls
+          const newWishlist = {
+            items: updatedItems,
+            lastUpdated: Date.now()
+          }
+          updateBadge(updatedItems)
+          updateWishlist(newWishlist, true).then(resolve)
+        })
+        .catch(err => {
+          console.log('Data refresh error: ', err)
+          resolve()
+        })
+    })
+  })
 }

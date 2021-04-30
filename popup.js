@@ -1,5 +1,5 @@
 import 'alpinejs'
-import { fetchAndScrapeUrl } from './helpers/pageScraping'
+import { fetchAndScrapeUrl, refreshPriceData } from './helpers/pageScraping'
 import { getWishlist, updateWishlist, isOnStoreUrl } from './helpers/browserApi'
 import orderBy from 'lodash.orderby'
 
@@ -7,6 +7,7 @@ import orderBy from 'lodash.orderby'
 function getState () {
   return {
     loading: false,
+    refreshing: false,
     onStoreUrl: '',
     onStoreAlreadyAdded: false,
     gameList: [],
@@ -57,6 +58,14 @@ function getState () {
       }
 
       return orderBy(list, sort, this.sortOrder)
+    },
+
+    manualRefresh () {
+      this.refreshing = true
+      refreshPriceData().then(() => {
+        this.refreshing = false
+        this.init()
+      })
     },
 
     init () {
