@@ -48,8 +48,8 @@ function getState () {
     },
 
     getSortedList (list) {
-      const NUMERIC_REGEXP = /[-]{0,1}[\d]*[.]{0,1}[\d]+/g; // extract price number
-      
+      const NUMERIC_REGEXP = /[-]{0,1}[\d]*[.]{0,1}[\d]+/g // extract price number
+
       const sort = (item) => {
         if (this.sortBy === 'price') {
           return parseInt(item.price.match(NUMERIC_REGEXP)[0])
