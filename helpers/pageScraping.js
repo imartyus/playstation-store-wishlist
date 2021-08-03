@@ -57,7 +57,7 @@ export function refreshPriceData () {
             lastUpdated: Date.now()
           }
           updateBadge(updatedItems)
-          updateWishlist(newWishlist).then(() => resolve(rejectedItems.length))
+          updateWishlist(newWishlist, true).then(() => resolve(rejectedItems.length))
         })
         .catch(err => {
           console.log('Data refresh error: ', err)
