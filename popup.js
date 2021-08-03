@@ -14,6 +14,7 @@ function getState () {
     lastUpdated: '',
     sortBy: 'title', // | 'price'
     sortOrder: 'asc',
+    refreshErrorNumber: 0,
 
     addGameFromTab () {
       getWishlist(wishlist => {
@@ -62,8 +63,9 @@ function getState () {
 
     manualRefresh () {
       this.refreshing = true
-      refreshPriceData().then(() => {
+      refreshPriceData().then(refreshErrorNumber => {
         this.refreshing = false
+        this.refreshErrorNumber = refreshErrorNumber || 0
         this.init()
       })
     },

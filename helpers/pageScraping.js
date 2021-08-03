@@ -45,19 +45,19 @@ export function refreshPriceData () {
       if (!wishlist.items.length) {
         return resolve()
       }
-      const requests = []
-      wishlist.items.forEach(item => {
-        requests.push(fetchAndScrapeUrl(item.url))
-      })
-      Promise.all(requests)
-        .then(updatedWishlist => {
-          const updatedItems = updatedWishlist.filter(item => !!item) // clear nulls
+
+      const requests = wishlist.items.map(item => fetchAndScrapeUrl(item.url))
+
+      Promise.allSettled(requests)
+        .then(results => {
+          const updatedItems = results.filter(result => result.status === 'fulfilled').map(item => item.value)
+          const rejectedItems = results.filter(result => result.status === 'rejected')
           const newWishlist = {
             items: updatedItems,
             lastUpdated: Date.now()
           }
           updateBadge(updatedItems)
-          updateWishlist(newWishlist, true).then(resolve)
+          updateWishlist(newWishlist).then(() => resolve(rejectedItems.length))
         })
         .catch(err => {
           console.log('Data refresh error: ', err)

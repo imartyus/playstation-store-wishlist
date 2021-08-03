@@ -21,7 +21,7 @@ body {
   background-color: var(--bg-color);
   font-family: "Roboto", arial, sans-serif;
   width: 500px;
-  padding: 15px 20px 35px;
+  padding: 15px 20px 10px;
   margin: 0px;
   min-height: 100px;
   color: var(--text-color);
@@ -154,23 +154,25 @@ button {
 }
 
 .last-updated {
-  color: var(--color-grey);
-  position: absolute;
-  bottom: 6px;
-  right: 58px;
+  float: right;
+  margin-right: 40px;
 }
 
-.manual-refresh {
-  color: var(--color-grey);
-  position: absolute;
-  bottom: 6px;
-  left: 14px;
+.refresh-error {
+  color: var(--color-error);
+  padding-top: 5px;
 }
 
-.manual-refresh button {
+.bottom-actions {
+  color: var(--color-grey);
+  padding-top: 18px;
+}
+
+.manual-refresh-button {
   background: none;
   color: inherit;
   border: none;
   cursor: pointer;
   text-decoration: underline;
+  padding: 0;
 }

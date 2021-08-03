@@ -43,16 +43,22 @@
 			</section>
 		</template>
 	</section>
-	<div class="manual-refresh">
-		<button 
-			@click="manualRefresh"
-			x-bind:disabled="refreshing"
-			x-text="refreshing ? 'Refreshing...' : 'Refresh prices &olarr;'">
-		</button>
-	</div>
-	<div class="last-updated" x-show.transition="lastUpdated">
-		Last updated: <span x-text='lastUpdated'></span>
-	</div>
+	<section class="bottom-actions" x-show="gameList.length">
+		<div>
+				<button 
+					class="manual-refresh-button"
+					@click="manualRefresh"
+					x-bind:disabled="refreshing"
+					x-text="refreshing ? 'Refreshing...' : 'Refresh prices &olarr;'">
+				</button>
+				<div class="last-updated" x-show="lastUpdated">
+					Last updated: <span x-text='lastUpdated'></span>
+				</div>
+		</div>
+		<div class="refresh-error" x-show="refreshErrorNumber">
+			<span x-text='refreshErrorNumber'></span> invalid links were encountered and removed from the list.
+		</div>
+	</section>
 
 	<script src="popup.js"></script>
 </body>
