@@ -1,4 +1,4 @@
-const psnProductUrlTester = /https:\/\/(store|www)\.playstation\.com\/[a-zA-Z-]+\/(product|games)\/\S+/g
+const psnProductUrlTester = /https:\/\/(store|www)\.playstation\.com\/[a-zA-Z-]+\/(product|games|concept)\/\S+/g
 
 // const testItem = {
 //   title: 'TEST',
