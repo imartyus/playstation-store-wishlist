@@ -52,6 +52,11 @@ export function refreshPriceData () {
         .then(results => {
           const updatedItems = results.filter(result => result.status === 'fulfilled').map(item => item.value)
           const rejectedItems = results.filter(result => result.status === 'rejected')
+
+          if (!updatedItems.length) {
+            throw new Error('All items failed to update')
+          }
+
           const newWishlist = {
             items: updatedItems,
             lastUpdated: Date.now()

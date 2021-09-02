@@ -1,7 +1,7 @@
 {
   "name": "PlayStation Store Wishlist",
   "description": "Keep track of the games you want to buy on PSN Store and their prices.",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "author": "imartyus",
   "permissions": [
     "activeTab",
