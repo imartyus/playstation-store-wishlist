@@ -1,3 +1,4 @@
+// @ts-check
 import 'alpinejs'
 import { fetchAndScrapeUrl, refreshPriceData } from './helpers/pageScraping'
 import { getWishlist, updateWishlist, isOnStoreUrl } from './helpers/browserApi'
@@ -58,14 +59,15 @@ function getState () {
         return item[this.sortBy]
       }
 
+      //@ts-ignore
       return orderBy(list, sort, this.sortOrder)
     },
 
     manualRefresh () {
       this.refreshing = true
-      refreshPriceData().then(refreshErrorNumber => {
+      refreshPriceData().then(_ => {
         this.refreshing = false
-        this.refreshErrorNumber = refreshErrorNumber || 0
+        // this.refreshErrorNumber = refreshErrorNumber || 0
         this.init()
       })
     },
@@ -89,4 +91,5 @@ function getState () {
   }
 }
 
+//@ts-ignore
 window.getState = getState

@@ -1,3 +1,5 @@
+import { Wishlist, WishlistItem } from "../types"
+
 const psnProductUrlTester = /https:\/\/(store|www)\.playstation\.com\/[a-zA-Z-]+\/(product|games|concept)\/\S+/g
 
 // const testItem = {
@@ -13,7 +15,7 @@ const psnProductUrlTester = /https:\/\/(store|www)\.playstation\.com\/[a-zA-Z-]+
 //   TEST.push(testItem)
 // }
 
-export function getWishlist (cb) {
+export function getWishlist (cb: (arg1: Wishlist) => any) {
   chrome.storage.sync.get(['wishlist'], ({ wishlist }) => {
     if (wishlist && wishlist.items) {
       // wishlist.items = [...wishlist.items, ...TEST]
@@ -21,13 +23,15 @@ export function getWishlist (cb) {
     } else {
       cb({
         items: [],
-        lastUpdated: null
+        lastUpdated: null,
+        sortBy: 'title',
+        sortOrder: 'asc',
       })
     }
   })
 }
 
-export function updateWishlist (updatedWishlist, partialUpdate = false) {
+export function updateWishlist (updatedWishlist: Partial<Wishlist>, partialUpdate = false): Promise<void> {
   return new Promise(resolve => {
     if (partialUpdate) {
       getWishlist(wishlist => {
@@ -43,12 +47,12 @@ export function updateWishlist (updatedWishlist, partialUpdate = false) {
   })
 }
 
-export function updateBadge (items) {
+export function updateBadge (items: WishlistItem[]) {
   const numOnSale = items.reduce((num, item) => item.ogPrice ? num + 1 : num, 0)
   chrome.browserAction.setBadgeText({ text: numOnSale ? numOnSale.toString() : '' })
 }
 
-export function isOnStoreUrl (cb) {
+export function isOnStoreUrl (cb: (currentUrl: string, isOnStore: boolean) => any) {
   chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
     const currentUrl = tabs[0].url
     cb(currentUrl, psnProductUrlTester.test(currentUrl))
