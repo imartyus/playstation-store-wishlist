@@ -1,4 +1,3 @@
-// @ts-check
 import 'alpinejs'
 import { fetchAndScrapeUrl, refreshPriceData } from './helpers/pageScraping'
 import { getWishlist, updateWishlist, isOnStoreUrl } from './helpers/browserApi'
@@ -15,7 +14,6 @@ function getState () {
     lastUpdated: '',
     sortBy: 'title', // | 'price'
     sortOrder: 'asc',
-    refreshErrorNumber: 0,
 
     addGameFromTab () {
       getWishlist(wishlist => {
@@ -67,7 +65,6 @@ function getState () {
       this.refreshing = true
       refreshPriceData().then(_ => {
         this.refreshing = false
-        // this.refreshErrorNumber = refreshErrorNumber || 0
         this.init()
       })
     },

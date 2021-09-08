@@ -61,7 +61,7 @@ export function refreshPriceData(): Promise<void> {
             lastUpdated: Date.now()
           }
           updateBadge(updatedItems)
-          updateWishlist(newWishlist, true).then(() => resolve())
+          updateWishlist(newWishlist, true).then(resolve)
         })
         .catch(err => {
           console.log('Data refresh error: ', err)

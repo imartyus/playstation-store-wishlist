@@ -127,6 +127,10 @@ button {
   color: var(--color-lightgreen);
 }
 
+.wl-item.outdated {
+  color: var(--color-warn);
+}
+
 .wl-item a {
   color: var(--text-color);
   text-decoration: none;
@@ -138,6 +142,10 @@ button {
 
 .wl-item.sale a {
   color: var(--color-lightgreen);
+}
+
+.wl-item.outdated a {
+  color: var(--color-warn);
 }
 
 .wl-item a:hover {
@@ -156,11 +164,6 @@ button {
 .last-updated {
   float: right;
   margin-right: 40px;
-}
-
-.refresh-error {
-  color: var(--color-error);
-  padding-top: 5px;
 }
 
 .bottom-actions {

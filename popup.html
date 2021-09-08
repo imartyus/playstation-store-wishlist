@@ -29,10 +29,10 @@
 		</div>
 		<template x-for="item in gameList" :key="item">
 			<section class="wl-row">
-				<div class="wl-item" x-bind:class="{ 'sale': item.ogPrice }">
+				<div class="wl-item" x-bind:class="{ 'sale': item.ogPrice, 'outdated': item.outdated }">
 					<div class="wl-item-title">
 						<a x-bind:href="item.url" target="_blank" x-text="item.title"></a>
-						<div class="text-small" x-text="item.saleEnds"></div>
+						<div class="text-small" x-text="item.outdated ? 'Price info might be outdated!' : item.saleEnds"></div>
 					</div>
 					<div>
 						<span x-text="item.price"></span>
@@ -55,12 +55,9 @@
 					Last updated: <span x-text='lastUpdated'></span>
 				</div>
 		</div>
-		<!-- <div class="refresh-error" x-show="refreshErrorNumber">
-			<span x-text='refreshErrorNumber'></span> invalid links were encountered and removed from the list.
-		</div> -->
 	</section>
 
-	<script src="popup.js"></script>
+	<script src="popup.ts"></script>
 </body>
 
 </html>

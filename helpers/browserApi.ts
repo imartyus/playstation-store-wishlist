@@ -5,9 +5,10 @@ const psnProductUrlTester = /https:\/\/(store|www)\.playstation\.com\/[a-zA-Z-]+
 // const testItem = {
 //   title: 'TEST',
 //   price: 'RUB 3300.20',
-//   // ogPrice: ogPrice ? ogPrice.innerHTML : null,
-//   // saleEnds: saleEnds ? saleEnds.innerHTML : null,
-//   url: 'www.google.ca'
+//   ogPrice: 'RUB 37300.20',
+//   saleEnds: 'tomorrow!',
+//   url: 'www.google.ca',
+//   outdated: true
 // }
 
 // const TEST = []
@@ -18,7 +19,7 @@ const psnProductUrlTester = /https:\/\/(store|www)\.playstation\.com\/[a-zA-Z-]+
 export function getWishlist (cb: (arg1: Wishlist) => any) {
   chrome.storage.sync.get(['wishlist'], ({ wishlist }) => {
     if (wishlist && wishlist.items) {
-      // wishlist.items = [...wishlist.items, ...TEST]
+      // wishlist.items = [...wishlist.items, testItem]
       cb(wishlist)
     } else {
       cb({
